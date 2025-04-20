@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bidang-urusan-service
+  labels:
+    app: bidang-urusan-service
+spec:
+  type: ClusterIP
+  selector:
+    app: bidang-urusan-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9003
