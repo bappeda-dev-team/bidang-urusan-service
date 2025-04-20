@@ -16,8 +16,14 @@ public class BidangUrusanService {
     }
 
     public Mono<BidangUrusan> addBidangUrusan(String kodeUrusan, String kodeBidangUrusan, String namaBidangUrusan) {
-        return Mono.just(buildBidangUrusanTidakValid(kodeBidangUrusan, namaBidangUrusan))
-                .flatMap(bidangUrusanRepository::save);
+        return bidangUrusanRepository.existsByKodeBidangUrusan(kodeBidangUrusan)
+                .flatMap(exists -> {
+                    if (exists) {
+                        return Mono.error(new BidangUrusanAlreadyExistsException(kodeBidangUrusan));
+                    }
+                    BidangUrusan bidangUrusan = buildBidangUrusanTidakValid(kodeBidangUrusan, namaBidangUrusan);
+                    return bidangUrusanRepository.save(bidangUrusan);
+                });
     }
 
     public static BidangUrusan buildBidangUrusanTidakValid(String kodeBidangUrusan, String namaBidangUrusan) {

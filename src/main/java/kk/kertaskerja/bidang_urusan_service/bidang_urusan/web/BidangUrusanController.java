@@ -3,6 +3,7 @@ package kk.kertaskerja.bidang_urusan_service.bidang_urusan.web;
 import jakarta.validation.Valid;
 import kk.kertaskerja.bidang_urusan_service.bidang_urusan.domain.BidangUrusan;
 import kk.kertaskerja.bidang_urusan_service.bidang_urusan.domain.BidangUrusanService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,6 +22,7 @@ public class BidangUrusanController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<BidangUrusan> addBidangUrusan(@RequestBody @Valid BidangUrusanRequest request) {
         return bidangUrusanService
                 .addBidangUrusan(request.kodeUrusan(),
