@@ -24,3 +24,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/kertaskerja_bidang_urusan
 kertaskerja:
   status: BIDANG URUSAN SERVICE IS UP
+  client:
+    urusan-service-uri: http://localhost:9002
