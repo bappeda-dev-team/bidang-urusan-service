@@ -19,11 +19,14 @@ public class BidangUrusanService {
     }
 
     public Mono<BidangUrusan> addBidangUrusan(String kodeUrusan, String kodeBidangUrusan, String namaBidangUrusan) {
-        return urusanClient.getByKodeUrusan(kodeUrusan)
-                .map(bidangUrusan -> buildBidangUrusanValid(kodeBidangUrusan, namaBidangUrusan))
-                .defaultIfEmpty(
-                        buildBidangUrusanTidakValid(kodeBidangUrusan, namaBidangUrusan)
-                ).flatMap(bidangUrusanRepository::save);
+        return bidangUrusanRepository.existsByKodeBidangUrusan(kodeBidangUrusan)
+                .flatMap(exists -> {
+                    if (exists) return Mono.error(new BidangUrusanAlreadyExistsException(kodeBidangUrusan));
+                    return urusanClient.getByKodeUrusan(kodeUrusan)
+                            .map(urusan -> buildBidangUrusanValid(kodeBidangUrusan, namaBidangUrusan))
+                            .defaultIfEmpty(buildBidangUrusanTidakValid(kodeBidangUrusan, namaBidangUrusan));
+                })
+                .flatMap(bidangUrusanRepository::save);
     }
 
     public static BidangUrusan buildBidangUrusanValid(String kodeBidangUrusan, String namaBidangUrusan) {
