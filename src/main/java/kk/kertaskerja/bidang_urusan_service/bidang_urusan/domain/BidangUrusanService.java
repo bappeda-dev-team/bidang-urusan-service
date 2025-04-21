@@ -17,6 +17,13 @@ public class BidangUrusanService {
     public Flux<BidangUrusan> getAllBidangUrusans() {
         return bidangUrusanRepository.findAll();
     }
+    public Mono<BidangUrusan> getByKodeBidangUrusan(String kodeBidangUrusan) {
+        return bidangUrusanRepository.existsByKodeBidangUrusan(kodeBidangUrusan)
+                .flatMap(exists -> {
+                    if (!exists) return Mono.error(new BidangUrusanNotFoundException(kodeBidangUrusan));
+                    return bidangUrusanRepository.findByKodeBidangUrusan(kodeBidangUrusan);
+                });
+    }
 
     public Mono<BidangUrusan> addBidangUrusan(String kodeUrusan, String kodeBidangUrusan, String namaBidangUrusan) {
         return bidangUrusanRepository.existsByKodeBidangUrusan(kodeBidangUrusan)

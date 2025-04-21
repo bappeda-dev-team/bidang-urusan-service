@@ -21,6 +21,11 @@ public class BidangUrusanController {
         return bidangUrusanService.getAllBidangUrusans();
     }
 
+    @GetMapping("{kodeBidangUrusan}")
+    public Mono<BidangUrusan> getByKodeBidangUrusan(@PathVariable String kodeBidangUrusan) {
+        return bidangUrusanService.getByKodeBidangUrusan(kodeBidangUrusan);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<BidangUrusan> addBidangUrusan(@RequestBody @Valid BidangUrusanRequest request) {

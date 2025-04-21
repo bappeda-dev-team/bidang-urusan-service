@@ -23,11 +23,13 @@ spec:
               exec:
                 command: [ "sh", "-c", "sleep 5" ]
           ports:
-            - containerPort: 9002
+            - containerPort: 9003
           env:
             - name: BPL_JVM_THREAD_COUNT
               value: "50"
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://kertaskerja-postgres:5432/kertaskerja_urusan
+            - name: SPRING_R2DBC_URL
+              value: r2dbc:postgresql://kertaskerja-postgres:5432/kertaskerja_bidang_urusan
+            - name: SPRING_FLYWAY_URL
+              value: jdbc:postgresql://kertaskerja-postgres:5432/kertaskerja_bidang_urusan
             - name: SPRING_PROFILES_ACTIVE
               value: testdata

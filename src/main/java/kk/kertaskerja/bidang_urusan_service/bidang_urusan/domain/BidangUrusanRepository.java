@@ -5,4 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface BidangUrusanRepository extends ReactiveCrudRepository<BidangUrusan, Long> {
     Mono<Boolean> existsByKodeBidangUrusan(String kodeBidangUrusan);
+    Mono<BidangUrusan> findByKodeBidangUrusan(String kodeBidangUrusan);
 }

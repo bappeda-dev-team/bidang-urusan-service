@@ -1,6 +1,7 @@
 package kk.kertaskerja.bidang_urusan_service.bidang_urusan.web;
 
 import kk.kertaskerja.bidang_urusan_service.bidang_urusan.domain.BidangUrusanAlreadyExistsException;
+import kk.kertaskerja.bidang_urusan_service.bidang_urusan.domain.BidangUrusanNotFoundException;
 import kk.kertaskerja.bidang_urusan_service.common.exception.ApiError;
 import kk.kertaskerja.bidang_urusan_service.common.exception.ValidationError;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,18 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class BidangUrusanControllerAdvice {
+    @ExceptionHandler(BidangUrusanNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ApiError handleBidangUrusanNotFoundException(BidangUrusanNotFoundException e, ServerHttpRequest request) {
+        return new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage(),
+                Instant.now(),
+                request.getPath().pathWithinApplication().value()
+        );
+    }
+
+
     @ExceptionHandler(BidangUrusanAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     ApiError handleBidangUrusanAlreadyExistsException(BidangUrusanAlreadyExistsException ex, ServerHttpRequest request) {
