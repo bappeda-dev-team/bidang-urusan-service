@@ -1,8 +1,6 @@
 package kk.kertaskerja.bidang_urusan_service;
 
 import kk.kertaskerja.bidang_urusan_service.bidang_urusan.domain.*;
-import kk.kertaskerja.bidang_urusan_service.urusan.Urusan;
-import kk.kertaskerja.bidang_urusan_service.urusan.UrusanClient;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
